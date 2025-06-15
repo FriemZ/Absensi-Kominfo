@@ -1,0 +1,294 @@
+/************************************* home-slider css start *************************************/
+/*====================================
+    home-slider swiper css
+====================================*/
+.slider-content .home-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 100%;
+}
+
+/*====================================
+    slider-content css
+====================================*/
+.slider-content .home-slider .slider-image h2 {
+    line-height: 1.11;
+}
+.slider-content .home-slider .slider-image h2 span {
+    text-decoration: underline;
+    text-decoration-thickness: 3px;
+    text-underline-position: auto;
+    text-decoration-color: var(--tertiary-font-color);
+}
+@media (min-width: 576px) {
+    .slider-content .home-slider .slider-image h2 span {
+        text-decoration-thickness: 4px;
+    }
+}
+@media (min-width: 1200px) {
+    .slider-content .home-slider .slider-image h2 span {
+        text-decoration-thickness: 5px;
+    }
+}
+@media (min-width: 1400px) {
+    .slider-content .home-slider .slider-image h2 span {
+        text-decoration-thickness: 6px;
+    }
+}
+@media (min-width: 1600px) {
+    .slider-content .home-slider .slider-image h2 {
+        font-size: 96px;
+    }
+    .slider-content .home-slider .slider-image h2 span {
+        text-decoration-thickness: 7px;
+    }
+    .slider-content .home-slider .slider-image p {
+        margin-top: 36px;
+    }
+    .slider-content .home-slider .slider-image a {
+        margin-top: 53px;
+    }
+}
+
+/*====================================
+    slider-content transition css
+====================================*/
+.slider-content .home-slider.swiper .swiper-slide .slider-image h2,
+.slider-content .home-slider.swiper .swiper-slide .slider-image p,
+.slider-content .home-slider.swiper .swiper-slide .slider-image a {
+    opacity: 0;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-image h2,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-image p,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-image a {
+    opacity: 1;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-image h2 {
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-image p {
+    -webkit-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+    -webkit-animation-duration: 0.6s;
+    animation-duration: 0.6s;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-image a {
+    -webkit-animation-delay: 0.9s;
+    animation-delay: 0.9s;
+    -webkit-animation-duration: 0.9s;
+    animation-duration: 0.9s;
+}
+
+/*====================================
+    slider-navigation css
+====================================*/
+.slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button {
+    color: var(--dominant-font-color);
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--extra-bgcolor);
+    -webkit-transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
+}
+.slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button.swiper-prev {
+    left: 5px;
+}
+.slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button.swiper-next {
+    right: 5px;
+}
+.slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button:hover {
+    color: var(--extra-font-color);
+    background-color: var(--dominant-font-color);
+}
+@media (min-width: 1400px) {
+    .slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button.swiper-prev {
+        left: 15px;
+    }
+    .slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button.swiper-next {
+        right: 15px;
+    }
+}
+@media (min-width: 1600px) {
+    .slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button {
+        width: 56px;
+        height: 56px;
+    }
+    .slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button.swiper-prev {
+        left: 100px;
+    }
+    .slider-content .home-slider.swiper .swiper-buttons .swiper-buttons-wrap button.swiper-next {
+        right: 100px;
+    }
+}
+
+/*====================================
+    slider-dot css
+====================================*/
+.slider-content .home-slider.swiper .swiper-dots .swiper-pagination {
+    width: unset;
+    position: unset;
+    margin: -5px 0px 0px -5px;
+}
+.slider-content .home-slider.swiper .swiper-dots .swiper-pagination span.swiper-pagination-bullet {
+    width: 10px;
+    height: 10px;
+    background-color: var(--secondary-font-color);
+    margin: 5px 0px 0px 5px;
+    opacity: 1;
+    border: 1px solid var(--secondary-font-color);
+}
+.slider-content .home-slider.swiper .swiper-dots .swiper-pagination span.swiper-pagination-bullet:hover,
+.slider-content .home-slider.swiper .swiper-dots .swiper-pagination span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: var(--dominant-font-color);
+    border-color: var(--dominant-font-color);
+}
+/************************************* home-slider css end *************************************/
+
+/************************************* banner css start *************************************/
+/*====================================
+    banner-content css
+====================================*/
+.banner-area .banner-block .banner-content span {
+    color: var(--dominant-font-color);
+    background-color: var(--extra-bgcolor);
+    -webkit-transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
+}
+.banner-area .banner-block:hover .banner-content span {
+    color: var(--extra-font-color);
+    background-color: var(--dominant-font-color);
+}
+/************************************* banner css end *************************************/
+
+/************************************* scroll-text css start *************************************/
+/*====================================
+    scroll-text css
+====================================*/
+.scroll-text .scroll-text-row.scroll-text1 {
+    -webkit-animation: slide1 50s linear infinite;
+    animation: slide1 50s linear infinite;
+    -webkit-animation-delay: -50s;
+    animation-delay: -50s;
+}
+.scroll-text .scroll-text-row.scroll-text2 {
+    -webkit-animation: slide2 50s linear infinite;
+    animation: slide2 50s linear infinite;
+    -webkit-animation-delay: -25s;
+    animation-delay: -25s;
+}
+.scroll-text:hover .scroll-text-row,
+.scroll-text:focus .scroll-text-row {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused
+}
+.scroll-text .scroll-text-row span::after {
+    content: "/";
+    margin: 0px 15px;
+}
+/************************************* scroll-text css end *************************************/
+
+/************************************* category-product css start *************************************/
+/*====================================
+    category-product swiper css
+====================================*/
+.collection-wrap #feature-product-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 50%;
+}
+@media (min-width: 768px) {
+    .collection-wrap #feature-product-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 33.33%;
+    }
+}
+@media (min-width: 1200px) {
+    .collection-wrap #feature-product-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 25%;
+    }
+}
+@media (min-width: 1400px) {
+    .collection-wrap #feature-product-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 20%;
+    }
+}
+/************************************* category-product css end *************************************/
+
+/************************************* testimonial css start *************************************/
+/*====================================
+    testimonial css
+====================================*/
+.testimonial .testimonial-title h2 {
+    font-size: 56px;
+    opacity: 0.05;
+}
+@media (min-width: 400px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 64px;
+    }
+}
+@media (min-width: 576px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 96px;
+    }
+}
+@media (min-width: 768px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 136px;
+    }
+}
+@media (min-width: 992px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 168px;
+    }
+}
+@media (min-width: 1200px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 200px;
+    }
+}
+@media (min-width: 1400px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 240px;
+    }
+}
+@media (min-width: 1600px) {
+    .testimonial .testimonial-title h2 {
+        font-size: 248px;
+    }
+}
+
+/*====================================
+    testimonial slider-swiper css
+====================================*/
+.testimonial .testi-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 100%;
+}
+/************************************* testimonial css end *************************************/
+
+/************************************* blog-slider css start *************************************/
+/*====================================
+    blog-slider swiper css
+====================================*/
+.blog-wrap #blog-slider-full.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 100%;
+}
+@media (min-width: 768px) {
+    .blog-wrap #blog-slider-full.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 50%;
+    }
+}
+@media (min-width: 992px) {
+    .blog-wrap #blog-slider-full.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 33.33%;
+    }
+}
+@media (min-width: 1400px) {
+    .blog-wrap #blog-slider-full.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 25%;
+    }
+}
+/************************************* blog-slider css end *************************************/

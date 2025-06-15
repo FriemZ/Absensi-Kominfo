@@ -1,0 +1,272 @@
+/************************************* other-tab css start *************************************/
+/*====================================
+    other-tabs css
+====================================*/
+.other-tabs {
+    margin-top: -15px;
+}
+.other-tabs>* {
+    margin-top: 15px;
+    padding-top: 16px;
+    border-top: 1px solid rgba(var(--border-color),var(--border-opacity));
+}
+.other-tabs>*:first-child {
+    padding-top: 0px;
+    border-top: none;
+}
+
+/*====================================
+    other-tab title css
+====================================*/
+.other-tab a[aria-expanded="true"] {
+    color: var(--dominant-font-color);
+}
+.other-tab a[aria-expanded="true"] span.other-tab-icon i::before {
+    content: "\f1af";
+}
+/************************************* other-tab css end *************************************/
+
+/************************************* column-2 css start *************************************/
+/*====================================
+    column-2 css
+====================================*/
+@media (min-width: 992px) {
+    .column-2 {
+        column-count: 2;
+        column-gap: 30px;
+    }
+}
+@media (min-width: 1400px) {
+    .column-2 {
+        column-gap: 50px;
+    }
+}
+/************************************* column-2 css end *************************************/
+
+/************************************* point-line css start *************************************/
+/*====================================
+    point-line css
+====================================*/
+.point-line>* {
+    margin-top: 13px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(var(--border-color),var(--border-opacity));
+}
+.point-line>*:first-child {
+    margin-top: 0px;
+    padding-top: 0px;
+    border-top: none;
+}
+/************************************* point-line css end *************************************/
+
+/************************************* index css start *************************************/
+/*====================================
+    question-index css
+====================================*/
+.question-index {
+    counter-reset: Questions;
+}
+.question-index h6::before {
+    counter-increment: Questions;
+    content: "Q." counter(Questions) " ";
+}
+
+/*====================================
+    number-index css
+====================================*/
+.number-index {
+    counter-reset: number;
+}
+.number-index .number-sub-index {
+    counter-reset: sub-number;
+}
+.number-index .number-sub-index::before {
+    counter-increment: number;
+    content: counter(number) ". ";
+}
+.number-index .p-number::before {
+    counter-increment: sub-number;
+    content: counter(number) "."counter(sub-number)" ";
+}
+/************************************* index css end *************************************/
+
+/************************************* about-us css start *************************************/
+/*====================================
+    about-us css
+====================================*/
+.about-us .row.about-area {
+    margin-top: -30px;
+}
+.about-us .row.about-area>* {
+    margin-top: 30px;
+}
+@media (min-width: 992px) {
+    .about-us .row.about-area,
+    .about-us .row.about-area>* {
+        margin-top: 0px;
+    }
+}
+
+/*====================================
+    about-counter css
+====================================*/
+.about-counter .about-counter-content .about-counter-info {
+    border-bottom: 1px solid rgba(var(--border-color),var(--border-opacity));
+}
+.about-counter .about-counter-content .about-counter-info:nth-last-child(-n+2) {
+    border-bottom: none;
+}
+.about-counter .about-counter-content .about-counter-info:nth-child(n+1):not(:nth-child(2n)) {
+    border-right: 1px solid rgba(var(--border-color),var(--border-opacity));
+}
+@media (min-width: 992px) {
+    .about-counter .about-counter-content .about-counter-info {
+        border-right: 1px solid rgba(var(--border-color),var(--border-opacity));
+    }
+    .about-counter .about-counter-content .about-counter-info:nth-child(4n) {
+        border-right: none;
+    }
+    .about-counter .about-counter-content .about-counter-info:nth-last-child(-n+4) {
+        border-bottom: none;
+    }
+}
+/************************************* about-us css end *************************************/
+
+/************************************* about-us2 css start *************************************/
+/*====================================
+    about-future css
+====================================*/
+.about-future .about-future-content img {
+    -webkit-transition: transform 0.5s ease-in-out;
+    transition: transform 0.5s ease-in-out;
+}
+.about-future .about-future-content:hover img {
+    transform: translateY(-10px);
+}
+/************************************* about-us2 css end *************************************/
+
+/************************************* about-us3 css start *************************************/
+/*====================================
+    about-feature-counter css
+====================================*/
+.about-feature-counter .about-feature-counter-info {
+    position: relative;
+    z-index: 1;
+}
+.about-feature-counter .about-feature-counter-info::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: var(--dominant-font-color);
+    z-index: -1;
+}
+/************************************* about-us3 css end *************************************/
+
+/************************************* contact-us css start *************************************/
+/*====================================
+    contact-map css
+====================================*/
+.contact-map iframe {
+    height: 320px;
+}
+@media (min-width: 576px) {
+    .contact-map iframe {
+        height: 400px;
+    }
+}
+@media (min-width: 1200px) {
+    .contact-map iframe {
+        height: 500px;
+    }
+}
+/************************************* contact-us css end *************************************/
+
+/************************************* privacy-policy css start *************************************/
+/*====================================
+    privacy-feature css
+====================================*/
+.privacy-feature .privacy-feature-content {
+    background-color: var(--extra-bgcolor);
+}
+.privacy-feature .privacy-feature-content:nth-child(even) {
+    background-color: var(--body-bgcolor);
+}
+/************************************* privacy-policy css end *************************************/
+
+/************************************* store css start *************************************/
+/*====================================
+    store css
+====================================*/
+.store .store-content .store-info {
+    margin-top: -13px;
+}
+.store .store-content .store-info>* {
+    margin-top: 13px;
+}
+/************************************* store css end *************************************/
+
+/************************************* terms-condition css start *************************************/
+/*====================================
+    terms-point css
+====================================*/
+.terms-point .row>*:nth-child(n+2) .terms-point-content {
+    border-top: 1px solid rgba(var(--border-color),var(--border-opacity));
+}
+.terms-point .row>*:nth-child(n+2) .terms-point-content,
+.terms-point .row>*:nth-child(n+3) .terms-point-content {
+    padding-top: 26px;
+    margin-top: 23px;
+}
+@media (min-width: 992px) {
+    .terms-point .row>*:nth-child(2) .terms-point-content {
+        padding-top: 0px;
+        margin-top: 0px;
+    }
+    .terms-point .row>*:nth-child(n+2) .terms-point-content {
+        border-top: none;
+    }
+    .terms-point .row>*:nth-child(n+3) .terms-point-content {
+        border-top: 1px solid rgba(var(--border-color),var(--border-opacity));
+    }
+}
+@media (min-width: 1400px) {
+    .terms-point .row>*:nth-child(odd) {
+        padding-right: 25px;
+    }
+    .terms-point .row>*:nth-child(even) {
+        padding-left: 25px;
+    }
+}
+/************************************* terms-condition css end *************************************/
+
+/************************************* coming-soon css start *************************************/
+/*=======================================
+    coming-content css
+=======================================*/
+.coming-content span.coming-content-title {
+    letter-spacing: 5px;
+}
+/************************************* coming-soon css end *************************************/
+
+/************************************* keyframes css start *************************************/
+/*====================================
+    blinking keyframes css
+====================================*/
+.blinking {
+    -webkit-animation: blinking 2s cubic-bezier(.4, 0, .6, 1) infinite;
+    animation: blinking 2s cubic-bezier(.4, 0, .6, 1) infinite;
+}
+@-webkit-keyframes blinking {
+    50% {
+        opacity: 0.5;
+    }
+}
+@keyframes blinking {
+    50% {
+        opacity: 0.5;
+    }
+}
+/************************************* keyframes css end *************************************/

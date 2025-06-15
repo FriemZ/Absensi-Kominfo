@@ -1,0 +1,2 @@
+composer require guzzlehttp/guzzle
+php artisan schedule:run

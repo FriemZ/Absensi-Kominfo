@@ -1,0 +1,523 @@
+/************************************* home-slider css start *************************************/
+/*====================================
+    home-slider swiper css
+====================================*/
+.slider-content .home-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 100%;
+}
+
+/*====================================
+    slider-content css
+====================================*/
+.slider-content .home-slider .slider-content-info h2 {
+    line-height: 1;
+}
+@media (min-width: 1600px) {
+    .slider-content .home-slider .slider-content-info h2 {
+        font-size: 104px;
+    }
+    .slider-content .home-slider .slider-content-info .slider-content-point {
+        margin-top: 39px;
+    }
+    .slider-content .home-slider .slider-content-info a {
+        margin-top: 56px;
+    }
+}
+
+/*====================================
+    slider-content transition css
+====================================*/
+.slider-content .home-slider.swiper .swiper-slide span.slider-content-img1,
+.slider-content .home-slider.swiper .swiper-slide span.slider-content-img2,
+.slider-content .home-slider.swiper .swiper-slide .slider-content-info h2,
+.slider-content .home-slider.swiper .swiper-slide .slider-content-info .slider-content-point,
+.slider-content .home-slider.swiper .swiper-slide .slider-content-info a {
+    opacity: 0;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active span.slider-content-img1,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active span.slider-content-img2,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info h2,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info .slider-content-point,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info a {
+    opacity: 1;
+    -webkit-animation-fill-mode: both;
+    animation-fill-mode: both;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active span.slider-content-img1 {
+    -webkit-animation-name: fadeInLeft;
+    animation-name: fadeInLeft;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active span.slider-content-img2 {
+    -webkit-animation-name: fadeInRight;
+    animation-name: fadeInRight;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active span.slider-content-img1,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active span.slider-content-img2 {
+    -webkit-animation-delay: 0.5s;
+    animation-delay: 0.5s;
+    -webkit-animation-duration: 0.5s;
+    animation-duration: 0.5s;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info h2,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info .slider-content-point,
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info a {
+    -webkit-animation-name: fadeInUp;
+    animation-name: fadeInUp;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info h2 {
+    -webkit-animation-delay: 0.3s;
+    animation-delay: 0.3s;
+    -webkit-animation-duration: 0.3s;
+    animation-duration: 0.3s;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info .slider-content-point {
+    -webkit-animation-delay: 0.6s;
+    animation-delay: 0.6s;
+    -webkit-animation-duration: 0.6s;
+    animation-duration: 0.6s;
+}
+.slider-content .home-slider.swiper .swiper-slide.swiper-slide-active .slider-content-info a {
+    -webkit-animation-delay: 0.9s;
+    animation-delay: 0.9s;
+    -webkit-animation-duration: 0.9s;
+    animation-duration: 0.9s;
+}
+
+/*====================================
+    slider-navigation css
+====================================*/
+.slider-content .swiper-buttons .swiper-buttons-wrap button {
+    color: var(--dominant-font-color);
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    background-color: var(--extra-font-color);
+    -webkit-transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out,background-color 0.5s ease-in-out;
+}
+.slider-content .swiper-buttons .swiper-buttons-wrap button.swiper-prev {
+    left: 0px;
+}
+.slider-content .swiper-buttons .swiper-buttons-wrap button.swiper-next {
+    right: 0px;
+}
+.slider-content .swiper-buttons .swiper-buttons-wrap button:hover {
+    color: var(--extra-font-color);
+    background-color: var(--dominant-font-color);
+}
+@media (min-width: 1600px) {
+    .slider-content .swiper-buttons .swiper-buttons-wrap button {
+        width: 56px;
+        height: 56px;
+    }
+    .slider-content .swiper-buttons .swiper-buttons-wrap button.swiper-prev {
+        left: 30px;
+    }
+    .slider-content .swiper-buttons .swiper-buttons-wrap button.swiper-next {
+        right: 30px;
+    }
+}
+
+/*====================================
+    slider-dot css
+====================================*/
+.slider-content .swiper-dots .swiper-pagination {
+    width: unset;
+    position: unset;
+    margin: -5px 0px 0px -20px;
+}
+.slider-content .swiper-dots .swiper-pagination span.swiper-pagination-bullet {
+    position: relative;
+    width: 10px;
+    height: 10px;
+    background-color: var(--dominant-font-color);
+    margin: 5px 0px 0px 20px;
+    opacity: 0.2;
+    border: 1px solid var(--dominant-font-color);
+}
+.slider-content .swiper-dots .swiper-pagination span.swiper-pagination-bullet::after {
+    content: "";
+    position: absolute;
+    top: -11px;
+    right: -11px;
+    bottom: -11px;
+    left: -11px;
+    opacity: 0;
+    border: 1px solid rgba(var(--border-color),var(--border-opacity));
+    border-radius: 50%;
+}
+.slider-content .swiper-dots .swiper-pagination span.swiper-pagination-bullet:hover,
+.slider-content .swiper-dots .swiper-pagination span.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: var(--dominant-font-color);
+    opacity: 1;
+    border-color: var(--dominant-font-color);
+}
+.slider-content .swiper-dots .swiper-pagination span.swiper-pagination-bullet.swiper-pagination-bullet-active::after {
+    opacity: 1;
+    border: 1px solid rgba(var(--border-color),var(--border-opacity));
+}
+/************************************* home-slider css end *************************************/
+
+/************************************* service css start *************************************/
+/*====================================
+    service css
+====================================*/
+.service-area .service-content {
+    position: relative;
+    z-index: 1;
+}
+.service-area .service-content::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(180deg, var(--body-bgcolor)30%, var(--extra-bgcolor)70%);
+    opacity: 0;
+    visibility: hidden;
+    -webkit-transition: background 0.5s ease-in-out,opacity 0.5s ease-in-out,visibility 0.5s ease-in-out;
+    transition: background 0.5s ease-in-out,opacity 0.5s ease-in-out,visibility 0.5s ease-in-out;
+}
+.service-area .service-content:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/*====================================
+    service-marquee css
+====================================*/
+.service-area .service-marquee .service-marquee-row.service-marquee1 {
+    -webkit-animation: slide1 50s linear infinite;
+    animation: slide1 50s linear infinite;
+    -webkit-animation-delay: -50s;
+    animation-delay: -50s;
+}
+.service-area .service-marquee .service-marquee-row.service-marquee2 {
+    -webkit-animation: slide2 50s linear infinite;
+    animation: slide2 50s linear infinite;
+    -webkit-animation-delay: -25s;
+    animation-delay: -25s;
+}
+.service-area:hover .service-marquee .service-marquee-row,
+.service-area:focus .service-marquee .service-marquee-row {
+    -webkit-animation-play-state: paused;
+    animation-play-state: paused
+}
+/************************************* service css end *************************************/
+
+/************************************* category-slider css start *************************************/
+/*====================================
+    category-slider swiper css
+====================================*/
+.category-slider .cat-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 100%;
+}
+@media (min-width: 576px) {
+    .category-slider .cat-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 50%;
+    }
+}
+@media (min-width: 992px) {
+    .category-slider .cat-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 33.33%;
+    }
+}
+@media (min-width: 1200px) {
+    .category-slider .cat-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 25%;
+    }
+}
+@media (min-width: 1400px) {
+    .category-slider .cat-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 20%;
+    }
+}
+/************************************* category-slider css end *************************************/
+
+/************************************* banner-area css start *************************************/
+/*====================================
+    banner-area css
+====================================*/
+@media (min-width: 768px) {
+    .banner-area .banner-big .banner-block img {
+        object-fit: cover;
+        background-position: center;
+    }
+}
+
+/*====================================
+    banner-big css
+====================================*/
+@media (min-width: 1600px) {
+    .banner-area .banner-big .banner-block .banner-content h2 {
+        font-size: 56px;
+    }
+    .banner-area .banner-big .banner-block .banner-content .banner-text {
+        margin-top: 30px;
+    }
+    .banner-area .banner-big .banner-block .banner-content span.banner-button {
+        margin-top: 46px;
+    }
+}
+
+/*====================================
+    banner-small css
+====================================*/
+@media (min-width: 1600px) {
+    .banner-area .banner-small .banner-block .banner-content h2 {
+        font-size: 32px;
+    }
+    .banner-area .banner-small .banner-block .banner-content span {
+        margin-top: 17px;
+    }
+}
+
+/*====================================
+    banner-deal css
+====================================*/
+.banner-area .banner-deal .banner-deal-text-img {
+    margin: 0 -30px;
+    transform: translateY(33.33%);
+}
+/************************************* banner-area css end *************************************/
+
+/************************************* home-about css start *************************************/
+/*====================================
+    home-about-banner css
+====================================*/
+.home-about .home-about-banner img {
+    filter: brightness(0.75);
+}
+@media (min-width: 1200px) {
+    .home-about .home-about-banner img {
+        object-fit: cover;
+        background-position: center;
+    }
+}
+
+/*====================================
+    home-about-image css
+====================================*/
+.home-about .home-about-image span span.home-about-image-label {
+    transform: translateX(25%);
+}
+
+/*====================================
+    home-about-content css
+====================================*/
+@media (min-width: 1500px) {
+    .home-about .home-about-content {
+        width: 91.66%;
+    }
+    .home-about .home-about-content h2 {
+        font-size: 56px;
+    }
+    .home-about .home-about-content .home-about-index {
+        margin-top: 46px;
+    }
+    .home-about .home-about-content a {
+        margin-top: 54px;
+    }
+}
+@media (min-width: 1700px) {
+    .home-about .home-about-content {
+        width: 83.33%;
+    }
+}
+@media (min-width: 1860px) {
+    .home-about .home-about-content {
+        width: 75%;
+    }
+}
+
+/*====================================
+    hot-spot css
+====================================*/
+.hot-spot.hot-spot1 {
+    top: 16.66%;
+    right: 33.33%;
+}
+.hot-spot.hot-spot2 {
+    bottom: 16.66%;
+    left: 33.33%;
+}
+
+/* hot-spot-content css */
+.hot-spot .hot-spot-content {
+    display: none;
+    width: 240px;
+}
+.hot-spot.hot-spot1 .hot-spot-content {
+    transform: translate(-50%, calc(0% + 48px));
+}
+.hot-spot.hot-spot2 .hot-spot-content {
+    transform: translate(-50%, calc(0% - 48px));
+}
+.hot-spot .hot-spot-content::after {
+    content: "";
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 8px solid var(--body-bgcolor);
+}
+.hot-spot.hot-spot1 .hot-spot-content::after {
+    top: -15px;
+    border-color: transparent transparent var(--body-bgcolor) transparent;
+}
+.hot-spot.hot-spot2 .hot-spot-content::after {
+    bottom: -15px;
+    border-color: var(--body-bgcolor) transparent transparent transparent;
+}
+/************************************* home-about css end *************************************/
+
+/************************************* product-tab css start *************************************/
+/*====================================
+    product-tab css
+====================================*/
+.product-tab-area ul.nav-tabs {
+    margin-top: -10px;
+    margin-left: -15px;
+    margin-right: -15px;
+}
+.product-tab-area ul.nav-tabs li {
+    position: relative;
+    margin-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.product-tab-area ul.nav-tabs li::before {
+    content: "/";
+    color: var(--secondary-font-color);
+    position: absolute;
+    left: -3.5px;
+    font-weight: var(--heading-font-weight);
+}
+.product-tab-area ul.nav-tabs li:first-child::before {
+    display: none;
+}
+.product-tab-area ul.nav-tabs li a {
+    color: var(--secondary-font-color);
+    -webkit-transition: color 0.5s ease-in-out;
+    transition: color 0.5s ease-in-out;
+}
+.product-tab-area ul.nav-tabs li a:hover {
+    color: var(--dominant-font-color);
+}
+.product-tab-area ul.nav-tabs li a.active {
+    color: var(--dominant-font-color);
+}
+@media (min-width: 576px) {
+    .product-tab-area ul.nav-tabs {
+        margin-left: -30px;
+        margin-right: -30px;
+    }
+    .product-tab-area ul.nav-tabs li {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+/*====================================
+    product-tab swiper css
+====================================*/
+.product-tab-area .collection-wrap .collection-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 50%;
+}
+@media (min-width: 768px) {
+    .product-tab-area .collection-wrap .collection-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 33.33%;
+    }
+}
+@media (min-width: 1200px) {
+    .product-tab-area .collection-wrap .collection-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 50%;
+    }
+}
+
+/*====================================
+    product-tab-banner css
+====================================*/
+@media (min-width: 1600px) {
+    .product-tab-area .product-tab-banner .product-tab-banner-content {
+        padding: 50px 50px 0px;
+    }
+    .product-tab-area .product-tab-banner .product-tab-banner-content h2 {
+        font-size: 56px;
+    }
+    .product-tab-area .product-tab-banner .product-tab-banner-content .product-tab-banner-text {
+        margin-top: 30px;
+    }
+}
+/************************************* product-tab css end *************************************/
+
+/************************************* testimonial css start *************************************/
+/*====================================
+    testimonial slider-swiper css
+====================================*/
+.testimonial .testi-slider .swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+    width: 100%;
+}
+@media (min-width: 992px) {
+    .testimonial {
+        overflow-x: hidden;
+    }
+    .testimonial .testi-wrap .testi-slider {
+        margin: 0px calc(-100% - 30px);
+    }
+    .testimonial .testi-slider.swiper:not(.swiper-initialized) .swiper-slide:not([style]) {
+        width: 33.33%;
+    }
+}
+@media (min-width: 1400px) {
+    .testimonial .testi-wrap .testi-slider {
+        margin: 0px -66.66%;
+    }
+}
+/************************************* testimonial css end *************************************/
+
+/************************************* blog-area css start *************************************/
+/*====================================
+    blog-area css
+====================================*/
+.blog-area .blog-area-title h2 {
+    font-size: 56px;
+    opacity: 0.05;
+}
+@media (min-width: 400px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 64px;
+    }
+}
+@media (min-width: 576px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 96px;
+    }
+}
+@media (min-width: 768px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 136px;
+    }
+}
+@media (min-width: 992px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 168px;
+    }
+}
+@media (min-width: 1200px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 200px;
+    }
+}
+@media (min-width: 1400px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 240px;
+    }
+}
+@media (min-width: 1600px) {
+    .blog-area .blog-area-title h2 {
+        font-size: 248px;
+    }
+}
+/************************************* blog-area css end *************************************/
