@@ -12,12 +12,6 @@ use Illuminate\Support\Facades\Http;
 
 class AbsensiController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -57,24 +51,30 @@ class AbsensiController extends Controller
 
             $absensi = Absensi::where('user_id', $user->id)->whereDate('tanggal', today())->first();
 
-            if (!$absensi && $now->gte($jamMasuk)) {
-                // Belum absen masuk dan sudah waktunya masuk
-                $isScanAllowed = true;
-                $absenStatus = 'masuk';
-            } elseif ($absensi && !$absensi->waktu_pulang) {
-                if ($now->lt($jamPulang)) {
-                    // Sudah absen masuk tapi belum waktunya pulang
-                    $isScanAllowed = false;
-                    $infoMessage = 'Kamu sudah absen masuk hari ini';
-                } else {
-                    // Sudah absen masuk, sekarang waktunya pulang
-                    $isScanAllowed = true;
-                    $absenStatus = 'pulang';
-                }
-            } elseif ($absensi && $absensi->waktu_pulang) {
-                // Sudah absen masuk & pulang
+            // Cek apakah user sudah absen dan statusnya izin atau sakit
+            if ($absensi && in_array($absensi->status, ['izin', 'sakit'])) {
                 $isScanAllowed = false;
-                $infoMessage = 'Kamu sudah absen penuh untuk hari ini';
+                $infoMessage = 'Hari ini kamu sedang ' . $absensi->status . ', tidak perlu absen.';
+            } else {
+                if (!$absensi && $now->gte($jamMasuk)) {
+                    // Belum absen masuk dan sudah waktunya masuk
+                    $isScanAllowed = true;
+                    $absenStatus = 'masuk';
+                } elseif ($absensi && !$absensi->waktu_pulang) {
+                    if ($now->lt($jamPulang)) {
+                        // Sudah absen masuk tapi belum waktunya pulang
+                        $isScanAllowed = false;
+                        $infoMessage = 'Kamu sudah absen masuk hari ini';
+                    } else {
+                        // Sudah absen masuk, sekarang waktunya pulang
+                        $isScanAllowed = true;
+                        $absenStatus = 'pulang';
+                    }
+                } elseif ($absensi && $absensi->waktu_pulang) {
+                    // Sudah absen masuk & pulang
+                    $isScanAllowed = false;
+                    $infoMessage = 'Kamu sudah absen penuh untuk hari ini';
+                }
             }
         }
 
@@ -222,43 +222,51 @@ class AbsensiController extends Controller
     }
 
 
-    /**
-     * Store a newly created resource in storage.
-     */
+
+    public function dispensasi()
+    {
+        $honorers = Honorer::with('user')->get();
+        return view('dashboard.dispen', compact('honorers'));
+    }
+
     public function store(Request $request)
     {
-        //
-    }
+        $request->validate([
+            'honorer_id' => 'required|exists:honorers,id',
+            'bukti_file' => 'required|file|mimes:jpg,jpeg,png,pdf|max:2048',
+        ]);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
+        $tanggal = now()->toDateString();
+        $honorer = Honorer::with('user')->findOrFail($request->honorer_id);
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
+        // Cek jika sudah absen
+        $sudahAbsen = Absensi::where('user_id', $honorer->user_id)
+            ->where('tanggal', $tanggal)
+            ->exists();
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
+        if ($sudahAbsen) {
+            return back()->with('error', 'Honorer sudah mengisi absensi hari ini.');
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
+        // Upload file bukti
+        $file = $request->file('bukti_file');
+        $filename = time() . '_' . $file->getClientOriginalName();
+        $file->move(public_path('surat'), $filename);
+
+        // Simpan ke tabel absensi
+        Absensi::create([
+            'user_id' => $honorer->user_id,
+            'tanggal' => $tanggal,
+            'jadwal_kerja_id' => 1, // fallback jadwal
+            'waktu_masuk' => '-',
+            'waktu_pulang' => '-',
+            'status' => 'hadir',
+            'bukti_file' => 'surat/' . $filename,
+        ]);
+
+        return redirect()->back()->with([
+            'alert_title' => 'Absensi Dispensasi',
+            'alert_message' => 'Honorer berhasil hadir!',
+        ]);
     }
 }

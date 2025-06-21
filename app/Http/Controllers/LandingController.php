@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Absensi;
 use App\Models\JadwalKerja;
 use Illuminate\Http\Request;
@@ -11,26 +12,84 @@ class LandingController extends Controller
 {
     public function home()
     {
-        $userId = auth()->id();
+        $user = auth()->user();
+        $userId = $user->id;
 
-        // Ambil semua absensi milik user yang sedang login, urut dari terbaru
+        // Ambil 4 absensi terakhir user
         $absensis = Absensi::with('user')
             ->where('user_id', $userId)
             ->orderByDesc('tanggal')
             ->limit(4)
             ->get();
 
+        // Rekap total kehadiran
         $absenTotal = [
-            'hadir' => Absensi::where('user_id', $userId)
-                ->whereIn('status', ['hadir', 'terlambat'])
-                ->count(),
-            'izin'  => Absensi::where('user_id', $userId)->where('status', 'izin')->count(),
+            'hadir' => Absensi::where('user_id', $userId)->whereIn('status', ['hadir', 'terlambat'])->count(),
+            'izin' => Absensi::where('user_id', $userId)->where('status', 'izin')->count(),
             'sakit' => Absensi::where('user_id', $userId)->where('status', 'sakit')->count(),
             'alpha' => Absensi::where('user_id', $userId)->where('status', 'alpha')->count(),
         ];
+
+        // Ambil absensi hari ini
+        $hariIni = now()->translatedFormat('l');
+        $tanggal = now()->toDateString();
+        $absenHariIni = Absensi::where('user_id', $userId)
+            ->where('tanggal', $tanggal)
+            ->first();
+
+        // Ambil jadwal kerja dan dinas
+        $jadwal = JadwalKerja::where('dinas_id', $user->dinas_id ?? 1)
+            ->where('hari', $hariIni)
+            ->first();
+
+        $jamMasuk = optional($jadwal)->jam_masuk ? Carbon::parse($jadwal->jam_masuk) : now();
+        $jamPulang = optional($jadwal)->jam_pulang ? Carbon::parse($jadwal->jam_pulang) : now()->addHours(8);
+        $maksKeterlambatan = optional($user->dinas)->maks_keterlambatan ?? 20;
+
+        $sekarang = now();
+
+        // Tentukan mode absen
+        if (!$absenHariIni) {
+            $modeAbsen = 'masuk';
+        } elseif ($absenHariIni && !$absenHariIni->waktu_pulang) {
+            $modeAbsen = 'pulang';
+        } else {
+            $modeAbsen = null;
+        }
+
+        $menitTerlambat = 0;
+        $tampilkanTerlambat = false;
+
+        // Batas akhir keterlambatan sebelum dihitung
+        $batasKeterlambatanMasuk = $jamMasuk->copy()->addMinutes($maksKeterlambatan);
+        $batasKeterlambatanPulang = $jamPulang->copy()->addMinutes($maksKeterlambatan);
+
+        if ($modeAbsen === 'masuk') {
+            if ($sekarang->gt($batasKeterlambatanMasuk)) {
+                $menitTerlambat = $sekarang->diffInMinutes($batasKeterlambatanMasuk);
+                $tampilkanTerlambat = true;
+            }
+        } elseif ($modeAbsen === 'pulang') {
+            if ($sekarang->gt($batasKeterlambatanPulang)) {
+                $menitTerlambat = $sekarang->diffInMinutes($batasKeterlambatanPulang);
+                $tampilkanTerlambat = true;
+            }
+        }
+
         $headerText = 'Beranda';
-        return view('landing.home', compact('headerText', 'absenTotal', 'absensis'));
+
+        return view('landing.home', compact(
+            'headerText',
+            'absenTotal',
+            'absensis',
+            'absenHariIni',
+            'modeAbsen',
+            'menitTerlambat',
+            'tampilkanTerlambat'
+        ));
     }
+
+
 
     public function izin()
     {
@@ -41,8 +100,18 @@ class LandingController extends Controller
 
     public function history()
     {
+        $userId = auth()->id();
+
+        $absensis = Absensi::where('user_id', auth()->id())
+            ->orderByDesc('tanggal')
+            ->get()
+            ->map(function ($absen) {
+                $absen->waktu_masuk_formatted = $absen->waktu_masuk ? \Carbon\Carbon::parse($absen->waktu_masuk)->format('H:i') : '-';
+                $absen->waktu_pulang_formatted = $absen->waktu_pulang ? \Carbon\Carbon::parse($absen->waktu_pulang)->format('H:i') : '-';
+                return $absen;
+            });
         $headerText = 'Riwayat';
-        return view('landing.history', compact('headerText'));
+        return view('landing.history', compact('headerText', 'absensis'));
     }
 
     public function jadwal()
@@ -156,7 +225,4 @@ class LandingController extends Controller
     }
 
 
-
-
-    public function scan() {}
 }

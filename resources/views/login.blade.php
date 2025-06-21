@@ -24,7 +24,125 @@
 </head>
 
 <body>
-    <div class="app-wrapper d-block">
+    <style>
+        body {
+            overflow: hidden;
+        }
+
+        #splash-screen {
+            position: fixed;
+            inset: 0;
+            background-color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: background-color 1s ease-in-out, opacity 1s ease-in-out;
+        }
+
+        #splash-logo {
+            width: 160px;
+            opacity: 0;
+            transform: scale(1);
+            animation: fadeInZoom 1s forwards ease-in-out;
+            transition: all 1s ease-in-out;
+            position: absolute;
+
+            /* Bikin jadi lingkaran */
+            border-radius: 50%;
+            background-color: #fff;
+
+            /* Tambahan padding jika logomu kecil di dalam */
+            padding: 3px;
+            object-fit: contain;
+
+            /* Efek timbul */
+            box-shadow:
+                0 8px 15px rgba(0, 0, 0, 0.3),
+                0 -4px 6px rgba(255, 255, 255, 0.5);
+            filter: brightness(1.05) contrast(1.05);
+        }
+
+        @keyframes fadeInZoom {
+            to {
+                opacity: 1;
+                transform: scale(1.1);
+            }
+        }
+
+        /* Saat pindah ke pojok */
+        .move-logo {
+            transform: scale(0.4) translate(600px, -300px);
+        }
+
+        /* Setelah splash berakhir, login form muncul */
+        #main-login {
+            height: 100vh;
+            /* isi seluruh tinggi viewport */
+            overflow: hidden;
+            /* tidak izinkan scroll dalam elemen */
+            display: flex;
+            /* opsional: untuk tata letak fleksibel */
+            align-items: center;
+            /* tengah vertikal */
+            justify-content: center;
+            /* tengah horizontal */
+        }
+
+        #main-login.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .otp-input {
+            border: none;
+            border-radius: 12px;
+
+            background: #f0f0f3;
+            /* abu terang */
+            color: #212529;
+
+            /* Efek cekung (inset) */
+            box-shadow:
+                inset 3px 3px 6px rgba(0, 0, 0, 0.1),
+                inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+
+            transition: 0.3s ease;
+        }
+        .name-input {
+            border: none;
+            border-radius: 8px;
+
+            background: #f0f0f3;
+            /* abu terang */
+            color: #212529;
+
+            /* Efek cekung (inset) */
+            box-shadow:
+                inset 3px 3px 6px rgba(0, 0, 0, 0.1),
+                inset -3px -3px 6px rgba(255, 255, 255, 0.7);
+
+            transition: 0.3s ease;
+        }
+        
+
+        .otp-input:focus {
+            outline: none;
+            background: #fefefe;
+            box-shadow:
+                inset 2px 2px 5px rgba(0, 0, 0, 0.1),
+                inset -2px -2px 5px rgba(255, 255, 255, 0.6);
+        }
+    </style>
+
+
+
+
+    <div id="splash-screen">
+        <img id="splash-logo" src="{{ asset('assets/images/logo/logo_awal.png') }}" alt="Logo Awal">
+    </div>
+
+    <div id="main-login" class="app-wrapper d-block">
         <main class="w-100">
             <div class="container-fluid">
                 <div class="row">
@@ -46,11 +164,11 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <div class="mb-3">
+                                        <div class="mb-4">
                                             <label for="login" class="form-label">Username or Name</label>
                                             <input type="text" name="login" id="login"
                                                 value="{{ old('login') }}"
-                                                class="form-control @error('login') is-invalid @enderror"
+                                                class="name-input form-control @error('login') is-invalid @enderror"
                                                 placeholder="Enter your username or name" required autofocus>
                                             @error('login')
                                                 <span class="invalid-feedback" role="alert">
@@ -61,20 +179,25 @@
                                     </div>
 
                                     <div class="col-12">
-                                        <div class="mb-3">
-                                            <label for="password" class="form-label">Password</label>
-                                            <!-- Nonaktifkan dulu atau arahkan ke halaman info -->
-                                            <a href="#" class="link-primary float-end">Forgot Password?</a>
-                                            <input type="password" name="password" id="password"
-                                                class="form-control @error('password') is-invalid @enderror"
-                                                placeholder="Enter your password" required>
-                                            @error('password')
-                                                <span class="invalid-feedback" role="alert">
-                                                    <strong>{{ $message }}</strong>
-                                                </span>
-                                            @enderror
+                                        <div class="mb-5">
+                                            <label class="form-label">Password</label>
+                                            <div class="d-flex gap-2 justify-content-between">
+
+                                                @for ($i = 1; $i <= 6; $i++)
+                                                    <input type="password"
+                                                        class="form-control text-center otp-input @if ($i === 1) @error('password') is-invalid @enderror @endif"
+                                                        maxlength="1" inputmode="text"
+                                                        style="width: 48px; height: 48px; font-size: 1.5rem;"
+                                                        autocomplete="off" required>
+                                                @endfor
+                                            </div>
+
+                                            <!-- Hidden field untuk dikirim ke backend -->
+                                            <input type="hidden" name="password" id="password" value="">
+
                                         </div>
                                     </div>
+
 
                                     <div class="col-12">
                                         <div class="mb-3">
@@ -82,18 +205,7 @@
                                         </div>
                                     </div>
 
-                                    <div class="app-divider-v justify-content-center">
-                                        <p>Or sign in with</p>
-                                    </div>
 
-                                    <div class="col-12 text-center">
-                                        <button type="button" class="btn btn-facebook icon-btn b-r-22 m-1"><i
-                                                class="ti ti-brand-facebook text-white"></i></button>
-                                        <button type="button" class="btn btn-gmail icon-btn b-r-22 m-1"><i
-                                                class="ti ti-brand-google text-white"></i></button>
-                                        <button type="button" class="btn btn-github icon-btn b-r-22 m-1"><i
-                                                class="ti ti-brand-github text-white"></i></button>
-                                    </div>
                                 </div>
                             </form>
 
@@ -114,6 +226,56 @@
             </div>
         </main>
     </div>
+
+
+    <script>
+        window.addEventListener('load', () => {
+            const splash = document.getElementById('splash-screen');
+            const logo = document.getElementById('splash-logo');
+            const main = document.getElementById('main-login');
+
+            // Jalankan animasi perpindahan logo
+            setTimeout(() => {
+                logo.classList.add('move-logo');
+            }, 1200);
+
+            // Sembunyikan splash screen dan munculkan login
+            setTimeout(() => {
+                splash.style.opacity = '0';
+                splash.style.pointerEvents = 'none';
+                main.classList.add('show');
+                document.body.style.overflow = 'auto';
+            }, 2200);
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const inputs = document.querySelectorAll('.otp-input');
+            const hiddenPassword = document.getElementById('password');
+
+            inputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    // Hanya angka, pindah otomatis
+                    if (input.value.length === 1 && index < inputs.length - 1) {
+                        inputs[index + 1].focus();
+                    }
+                    updatePassword();
+                });
+
+                input.addEventListener('keydown', (e) => {
+                    if (e.key === "Backspace" && input.value === "" && index > 0) {
+                        inputs[index - 1].focus();
+                    }
+                });
+            });
+
+            function updatePassword() {
+                const password = Array.from(inputs).map(i => i.value).join('');
+                hiddenPassword.value = password;
+            }
+        });
+    </script>
+
+
 
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>

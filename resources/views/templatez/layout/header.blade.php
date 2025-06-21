@@ -10,7 +10,16 @@
                         <div
                             class="col-12 col-xl-3 header-element header-logo d-flex align-items-center justify-content-between">
                             <!-- Spacer (Sebagai penyeimbang visual kanan) -->
-                            <div style="width: 50px;" class="z-2"></div>
+
+                            <!-- Menu Icon (Kiri) -->
+                            <div class="header-icon-wrapper">
+                                <a href="javascript:void(0)" class="d-block header-icon-toggler toggler-btn logo-raised"
+                                    aria-label="Menu toggler button">
+                                    <span class="d-block header-block-icon dominant-link font-25">
+                                        <i class="ri-menu-line d-block lh-1" style="color: var(--dominant-font-color);"></i>
+                                    </span>
+                                </a>
+                            </div>
 
                             <div class="header-theme-logo mx-auto text-center">
                                 <a href="/home" class="d-inline-block theme-logo">
@@ -19,13 +28,12 @@
                                 </a>
                             </div>
 
-
                             <!-- Menu Icon (Kiri) -->
                             <div class="header-icon-wrapper">
-                                <a href="javascript:void(0)" class="d-block header-icon-toggler toggler-btn logo-raised"
+                                <a href="/profile" class="d-block  logo-raised"
                                     aria-label="Menu toggler button">
                                     <span class="d-block header-block-icon dominant-link font-25">
-                                        <i class="ri-menu-3-line d-block lh-1"></i>
+                                        <i class="ri-user-line fs-5" style="color: var(--dominant-font-color);"></i>
                                     </span>
                                 </a>
                             </div>

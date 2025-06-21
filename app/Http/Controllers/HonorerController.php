@@ -83,14 +83,16 @@ class HonorerController extends Controller
             \Log::info("Folder $fullPath berhasil dibuat.");
         }
 
-        // Simpan foto-foto
+        // Simpan foto-foto dengan nama tetap
         $photoPaths = [];
         foreach ($request->file('foto_wajah') as $index => $photo) {
-            $filename = "foto" . ($index + 1) . "_{$user->id}_" . \Illuminate\Support\Str::random(8) . "." . $photo->getClientOriginalExtension();
-            $photo->move($fullPath, $filename);
-            $photoPaths[] = url("{$folderName}/{$filename}");
-            \Log::info("Foto disimpan: " . end($photoPaths));
+            $filename = "foto" . ($index + 1) . "_{$user->id}.jpg"; // tanpa random
+            $photo->move($fullPath, $filename); // file lama akan diganti jika upload ulang
+            $photoPaths[] = '/' . $folderName . '/' . $filename; // hasil: /face/123/foto1_123.jpg
+
+            \Log::info("Foto disimpan: {$folderName}/{$filename}");
         }
+
 
         \Log::info("Isi folder $fullPath: " . json_encode(scandir($fullPath)));
         $faceEncodingJson = null;
@@ -134,6 +136,95 @@ class HonorerController extends Controller
         ]);
     }
 
+    public function update(Request $request, $id)
+    {
+        $honorer = Honorer::findOrFail($id);
+        $user = $honorer->user;
+
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
+            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
+            'email' => 'nullable|email|unique:users,email,' . $user->id,
+            'no_hp' => 'required|string',
+            'alamat' => 'required|string',
+            'foto_wajah.*' => 'image|mimes:jpeg,jpg,png|max:2048',
+        ]);
+
+        // Update data user
+        $user->update([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+        ]);
+
+        // Update data honorer
+        $honorer->update([
+            'jenis_kelamin' => $validated['jenis_kelamin'],
+            'no_hp' => $validated['no_hp'],
+            'alamat' => $validated['alamat'],
+        ]);
+
+        // Cek apakah ada file baru
+        if ($request->hasFile('foto_wajah')) {
+            // Ambil folder dari foto lama
+            $oldPhotos = json_decode($honorer->foto_wajah, true);
+            $folderPath = null;
+            $folderName = null;
+
+            if ($oldPhotos && count($oldPhotos) > 0) {
+                $first = $oldPhotos[0];
+                $segments = explode('/', parse_url($first, PHP_URL_PATH));
+                if (count($segments) >= 3) {
+                    $folderName = "{$segments[1]}/{$segments[2]}"; // face/xxx
+                    $folderPath = public_path($folderName);
+                }
+            }
+
+            // Jika folder lama tidak ada, buat baru
+            if (!$folderPath || !file_exists($folderPath)) {
+                $folderName = "face/{$user->id}";
+                $folderPath = public_path($folderName);
+                if (!file_exists($folderPath)) {
+                    mkdir($folderPath, 0755, true);
+                }
+            }
+
+            // Simpan foto-foto dengan nama tetap
+            $photoPaths = [];
+            foreach ($request->file('foto_wajah') as $index => $photo) {
+                $filename = "foto" . ($index + 1) . "_{$user->id}.jpg"; // nama tetap
+                $photo->move($folderPath, $filename);
+                $photoPaths[] = '/' . $folderName . '/' . $filename; // hasil: /face/123/foto1_123.jpg
+            }
+
+            // Proses encoding wajah ulang
+            $faceEncodingJson = null;
+            try {
+                $pythonCmd = env('PYTHON_PATH', 'python');
+                $scriptPath = base_path('python/encode_face.py');
+                $command = escapeshellcmd("{$pythonCmd} {$scriptPath} {$folderPath}");
+                $output = shell_exec($command);
+
+                $decoded = json_decode($output, true);
+                if (is_array($decoded) && count($decoded) === 128) {
+                    $faceEncodingJson = json_encode($decoded);
+                }
+            } catch (\Exception $e) {
+                \Log::error("Gagal encoding wajah: " . $e->getMessage());
+            }
+
+            $honorer->update([
+                'foto_wajah' => json_encode($photoPaths),
+                'face_encoding' => $faceEncodingJson ?? '-',
+            ]);
+        }
+
+        return redirect()->back()->with([
+            'alert_title' => 'Update Berhasil',
+            'alert_message' => 'Data honorer berhasil diperbarui.',
+        ]);
+    }
+
 
     public function destroy($id)
     {
@@ -148,31 +239,5 @@ class HonorerController extends Controller
             'alert_title' => $userName,
             'alert_message' => 'User berhasil dihapus!',
         ]);
-    }
-
-
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
     }
 }

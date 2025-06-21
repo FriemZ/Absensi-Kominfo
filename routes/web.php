@@ -37,7 +37,7 @@ Route::get('/check-temp', function () {
 Route::middleware('auth')->group(function () {
 
     // Dashboard hanya super_admin dan admin
-    Route::middleware('role:super_admin,admin')->group(function () {
+    Route::middleware('role:admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
         Route::get('/user', [UserController::class, 'user']);
@@ -45,7 +45,8 @@ Route::middleware('auth')->group(function () {
         Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
         Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
 
-
+        Route::get('/dispensasi', [AbsensiController::class, 'dispensasi'])->name('dispensasi.create');
+        Route::post('/admin/dispensasi', [AbsensiController::class, 'store'])->name('admin.dispensasi.store');
         
         Route::get('/dinasku', [DinasController::class, 'index']);
         Route::put('/dinasku/{user}', [DinasController::class, 'update'])->name('dinasku.update');

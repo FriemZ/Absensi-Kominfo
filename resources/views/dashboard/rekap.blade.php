@@ -39,14 +39,6 @@
                                     @if (auth()->user()->role == 'super_admin')
                                         <td>{{ $honorer->user->dinas->nama_dinas ?? '-' }}</td>
                                     @endif
-                                    {{-- <td>
-                                        @if ($honorer->foto_wajah)
-                                            <img src="{{ asset('storage/' . $honorer->foto_wajah) }}" alt="Foto Wajah"
-                                                width="50" height="50" class="rounded">
-                                        @else
-                                            -
-                                        @endif
-                                    </td> --}}
                                     <td>
                                         <div class="d-flex gap-2 justify-content-center align-items-center">
                                             <!-- Tombol Edit -->
@@ -184,98 +176,4 @@
             Swal.fire("{{ session('alert_title') }}", "{{ session('alert_message') }}", "success");
         </script>
     @endif
-
-    <!-- Offcanvas Add User -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel3">
-        <div class="offcanvas-header">
-            <h5 id="offcanvasRightLabel3">Add New User</h5>
-            <button type="button" class="btn-close text-reset fs-5" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <form action="{{ route('honorer.store') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-                <div class="mb-3">
-                    <label>Upload Foto Wajah (minimal 3):</label>
-                    <input type="file" name="foto_wajah[]" multiple required accept="image/jpeg,image/jpg,image/png">
-                </div>
-                <div class="mb-3">
-                    <label for="name" class="form-label">Nama</label>
-                    <input type="text" class="form-control" name="name" required placeholder="Masukkan Nama.....">
-                </div>
-                <div class="mb-3">
-                    <label for="username" class="form-label">Username</label>
-                    <input type="text" class="form-control" name="username" required
-                        placeholder="Masukkan Username.....">
-                </div>
-                <div class="mb-3">
-                    <label for="tanggal_lahir" class="form-label">Tanggal Lahir</label>
-                    <input type="date" class="form-control" name="tanggal_lahir" id="tanggal_lahir" required>
-                </div>
-                <div class="mb-3">
-                    <label class="check-box">Jenis Kelamin</label>
-                    <div class="form-check d-flex align-items-center gap-2 my-2 ps-0">
-                        <input class="form-check-input f-s-18 mb-1 m-1" type="radio" name="jenis_kelamin"
-                            id="radio_laki" value="Laki-laki" required>
-                        <label for="radio_laki">Laki-laki</label>
-
-                        <input class="form-check-input f-s-18 mb-1 m-1" type="radio" name="jenis_kelamin"
-                            id="radio_perempuan" value="Perempuan" required>
-                        <label for="radio_perempuan">Perempuan</label>
-                    </div>
-                </div>
-                <div class="mb-3">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" required
-                        placeholder="Masukkan @Email.....">
-                </div>
-                <div class="mb-3">
-                    <label class="form-label">Nomor HP</label>
-                    <div class="input-group" id="content">
-                        <span class="input-group-text">+62</span>
-                        <input type="text" class="form-control" name="no_hp" placeholder="xxx-xxxxx-xxx" required>
-                    </div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Alamat</label>
-                    <textarea class="form-control" name="alamat" placeholder="Masukkan Alamat Anda........." required></textarea>
-                </div>
-
-                <input type="hidden" name="role" value="honorer">
-
-
-
-                @if (auth()->user()->role == 'super_admin')
-                    <div class="mb-3">
-                        <label for="dinas_id" class="form-label">Dinas</label>
-                        <select name="dinas_id" class="form-select" required>
-                            <option selected disabled>Pilih Dinas</option>
-                            @foreach ($dinas as $item)
-                                <option value="{{ $item->id }}">{{ $item->nama_dinas }}</option>
-                            @endforeach
-                        </select>
-                    </div>
-                @elseif(auth()->user()->role == 'admin')
-                    <input type="hidden" name="dinas_id" value="{{ auth()->user()->dinas_id }}">
-                @endif
-
-
-                <div class="d-flex justify-content-center gap-3 align-items-center">
-                    <button type="reset" class="btn btn-secondary">
-                        <i class="ti ti-refresh"></i>
-                    </button>
-
-                    <button type="button" class="btn btn-danger" data-bs-dismiss="offcanvas">
-                        <i class="ti ti-x"></i> Cancel
-                    </button>
-
-                    <button type="submit" class="btn btn-primary">
-                        <i class="ti ti-check"></i> Submit
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
 @endsection

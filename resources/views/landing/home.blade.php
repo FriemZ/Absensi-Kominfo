@@ -10,8 +10,25 @@
                                 class="d-flex flex-column align-items-center ptb-30 plr-15 plr-sm-30 extra-bg box-shadow border-radius">
                                 <h2 class="dominant-color font-18 text-center" id="realtime-date">Sabtu, 4 Mei 2025</h2>
                                 <h2 class="dominant-color font-32" id="realtime-time">00:00:00</h2>
-                                <div class="secondary-color d-flex align-items-baseline mst-9 mb-4">MataKuliah (-20mnt)
+                                <div class="secondary-color d-flex align-items-baseline mst-9 mb-4">
+                                    @if (!$absenHariIni)
+                                        {{-- Belum absen hari ini --}}
+                                        Absen Masuk
+                                        @if ($tampilkanTerlambat)
+                                            (<span class="text-danger">-{{ round($menitTerlambat) }}mnt</span>)
+                                        @endif
+                                    @elseif ($absenHariIni && !$absenHariIni->waktu_pulang)
+                                        {{-- Sudah absen masuk tapi belum pulang --}}
+                                        Absen Pulang
+                                        @if ($tampilkanTerlambat)
+                                            (<span class="text-danger">-{{ round($menitTerlambat) }}mnt</span>)
+                                        @endif
+                                    @else
+                                        {{-- Sudah absen penuh --}}
+                                        Sudah absen hari ini
+                                    @endif
                                 </div>
+
                             </div>
                         </div>
                         <div class="position-absolute bottom-0 start-0 end-0 z-1 d-flex justify-content-center align-content-center mb-4"
@@ -77,7 +94,7 @@
                                         </tr>
                                     </thead> --}}
                                     <tbody>
-                                        @foreach ($absensis as $absen)
+                                        @forelse ($absensis as $absen)
                                             <tr class="text-center glass-row">
                                                 <td class="text-start ps-3">
                                                     <div class="text-muted small">
@@ -86,13 +103,13 @@
                                                 </td>
                                                 <td>
                                                     <span
-                                                        style="color: {{ $absen->status === 'terlambat' ? 'red' : 'var(--dominant-font-color)' }}; white-space: nowrap; display: inline-block;">
+                                                        style="color: var(--dominant-font-color); white-space: nowrap; display: inline-block;">
                                                         <b>{{ $absen->waktu_masuk ? \Carbon\Carbon::parse($absen->waktu_masuk)->format('H:i') : '-' }}</b>
                                                     </span>
                                                 </td>
                                                 <td>
                                                     <span
-                                                        style="color: {{ $absen->status === 'terlambat' ? 'red' : 'var(--dominant-font-color)' }}; white-space: nowrap; display: inline-block;">
+                                                        style="color: var(--dominant-font-color); white-space: nowrap; display: inline-block;">
                                                         <b>{{ $absen->waktu_pulang ? \Carbon\Carbon::parse($absen->waktu_pulang)->format('H:i') : '-' }}</b>
                                                     </span>
                                                 </td>
@@ -111,7 +128,13 @@
                                                     @endif
                                                 </td>
                                             </tr>
-                                        @endforeach
+                                        @empty
+                                            <tr>
+                                                <td colspan="4" class="text-center text-muted py-4">
+                                                    Belum ada riwayat absensi.
+                                                </td>
+                                            </tr>
+                                        @endforelse
                                     </tbody>
                                 </table>
                             </div>

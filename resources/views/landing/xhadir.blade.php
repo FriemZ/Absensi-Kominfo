@@ -5,19 +5,18 @@
         <div class="container">
             <div class="row row-mtm30">
                 <div class="col-12 col-lg-12 text-center full-center-wrapper" data-animate="animate__fadeIn">
-                    {{-- Tampilkan pesan error --}}
-                    @if (session('error'))
-                        <div class="alert alert-danger mb-3">
-                            {{ session('error') }}
-                        </div>
-                    @endif
+                    <script script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+                    <script>
+                        @if (session('error'))
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Maaf!',
+                                text: '{{ session('error') }}',
+                                confirmButtonColor: '#d33'
+                            });
+                        @endif
+                    </script>
 
-                    {{-- Tampilkan pesan sukses --}}
-                    @if (session('success'))
-                        <div class="alert alert-success mb-3">
-                            {{ session('success') }}
-                        </div>
-                    @endif
 
                     <form action="{{ route('storeIzin') }}" method="POST" enctype="multipart/form-data">
                         @csrf

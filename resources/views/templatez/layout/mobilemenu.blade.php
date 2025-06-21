@@ -1,5 +1,6 @@
 <!-- mobile-menu start -->
-<div class="mobile-menu d-xl-none position-fixed top-0 bottom-0 extra-bg z-index-5 invisible box-shadow " id="mobile-menu">
+<div class="mobile-menu d-xl-none position-fixed top-0 bottom-0 extra-bg z-index-5 invisible box-shadow "
+    id="mobile-menu">
     <div class="mobile-contents d-flex flex-column">
         <div class="menu-close ptb-10 plr-15 beb">
             <button type="button" class="menu-close-btn d-block body-secondary-color icon-16 ms-auto"
@@ -8,14 +9,28 @@
         <div class="mobilemenu-content beb">
             <div class="main-wrap">
                 @php
+                    use App\Models\Honorer;
+                    use Illuminate\Support\Facades\Auth;
+
                     $user = Auth::user();
-                    $nama = $user->name; // atau $user->mahasiswa->name jika relasi
+                    $nama = $user->name;
+
+                    // Ambil data Honorer langsung dari model
+                    $honorer = Honorer::where('user_id', $user->id)->first();
+
+                    $fotoPertama = null;
+                    if (!empty($honorer?->foto_wajah)) {
+                        $fotos = json_decode($honorer->foto_wajah, true);
+                        $fotoPertama = $fotos[0] ?? null;
+                    }
                 @endphp
+
 
                 <!-- Profile section -->
                 <div class="ti-profile text-center py-4 border-bottom">
                     <div class="d-inline-block position-relative">
-                        <img src="assetsz/image/account/female.jpg" class="rounded-circle border shadow-lg"
+                        <img src="{{ $fotoPertama ?? asset('assetsz/image/account/female.jpg') }}"
+                            class="rounded-circle border shadow-lg"
                             style="width: 96px; height: 96px; object-fit: cover; transform: translateY(-8px); border-color: var(--tertiary-font-color);">
                     </div>
                     <div class="mt-3 fw-semibold" style="color: var(--dominant-font-color); font-size: 1.3rem;">
@@ -33,14 +48,6 @@
                             style="color: var(--dominant-font-color);">
                             <i class="ri-home-line fs-5" style="color: var(--dominant-font-color);"></i>
                             <span class="fw-semibold">Home</span>
-                        </button>
-                    </li>
-                    <li class="menu-li mb-3">
-                        <button onclick="window.location.href='/profile'" type="button"
-                            class="btn btn-light w-100 text-start d-flex align-items-center gap-3 shadow-sm"
-                            style="color: var(--dominant-font-color);">
-                            <i class="ri-user-line fs-5" style="color: var(--dominant-font-color);"></i>
-                            <span class="fw-semibold">Profil</span>
                         </button>
                     </li>
                     <li class="menu-li mb-3">

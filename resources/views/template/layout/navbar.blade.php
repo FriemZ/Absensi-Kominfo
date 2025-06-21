@@ -23,7 +23,7 @@
                   </a>
               </li>
               <li class="no-sub">
-                  <a href="/dashboard">
+                  <a href="/dispensasi">
                       <i class="ti ti-layout-dashboard"></i> Dispensasi
                   </a>
               </li>

@@ -36,7 +36,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'adminfri',
             'name' => 'Admin Kominfo',
             'email' => 'admin@kominfo.go.id',
-            'password' => Hash::make('admin123'),
+            'password' => Hash::make('admin1'),
             'role' => 'admin',
             'dinas_id' => $dinas->id,
             'remember_token' => Str::random(10),
