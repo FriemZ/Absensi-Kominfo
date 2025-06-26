@@ -1,7 +1,7 @@
   <!-- Menu Navigation starts -->
   <nav class="dark-sidebar">
       <div class="app-logo">
-          <a class="logo d-inline-block" href="analytics_dashboard.html">
+          <a class="logo d-inline-block" href="/dashboard">
               <img src="assets/images/logo/dark.png" alt="#" class="dark-logo">
               <img src="assets/images/logo/1.png" alt="#" class="light-logo">
           </a>
@@ -24,7 +24,7 @@
               </li>
               <li class="no-sub">
                   <a href="/dispensasi">
-                      <i class="ti ti-layout-dashboard"></i> Dispensasi
+                      <i class="ti ti ti-clock-pause"></i> Dispensasi
                   </a>
               </li>
 
@@ -53,7 +53,7 @@
                   <hr style="border: 0; border-top: 1px solid #ccc; margin: 2px 0;">
               </li>
               <li class="no-sub">
-                  <a href="mailto:teqlathemes@gmail.com">
+                  <a href="/rekapitulasi">
                       <i class="ti ti-file-analytics"></i> Rekapitulasi
                   </a>
               </li>

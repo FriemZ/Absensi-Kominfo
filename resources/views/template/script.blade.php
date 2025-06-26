@@ -15,8 +15,6 @@
 
 <!-- ApexCharts JS -->
 <script src="assets/vendor/apexcharts/apexcharts.min.js"></script>
-{{-- <script src="assets/js/analytics_dashboard.js"></script> --}}
-<script src="assets/js/radlaibar.js"></script>
 <script src="assets/js/mixed.js"></script>
 
 <!-- DataTables -->
@@ -36,12 +34,37 @@
 <script src="assets/libs/datatables.net-buttons/js/buttons.print.min.js"></script>
 <script src="assets/libs/datatables.net-buttons/js/buttons.colVis.min.js"></script>
 
+
 <!-- DataTables Responsive -->
 <script src="assets/libs/datatables.net-responsive/js/dataTables.responsive.min.js"></script>
 <script src="assets/libs/datatables.net-responsive-bs4/js/responsive.bootstrap4.min.js"></script>
 
 <!-- DataTable Init -->
 <script src="assets/js/pages/datatables.init.js"></script>
+
+{{-- Baru tambahkan script update total keterlambatan --}}
+<script>
+    $(document).ready(function() {
+        var table = $('#datatable-buttons').DataTable();
+
+        function updateTotalTerlambat() {
+            let total = 0;
+            table.rows({
+                search: 'applied'
+            }).every(function() {
+                const cell = $(this.node()).find('.terlambat-cell').text();
+                const menit = parseInt(cell) || 0;
+                total += menit;
+            });
+
+            $('#total-terlambat').text(total + ' menit');
+            $('#tfoot-terlambat').text(total);
+        }
+
+        table.on('search.dt draw.dt', updateTotalTerlambat);
+        updateTotalTerlambat();
+    });
+</script>
 
 <!-- Toastify -->
 <script src="assets/vendor/notifications/toastify-js.js"></script>

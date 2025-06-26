@@ -45,11 +45,6 @@
                                                         <i class="ti ti-trash"></i>
                                                     </button>
                                                 </form>
-                                                @if (session('alert_message'))
-                                                    <script>
-                                                        Swal.fire("{{ session('alert_title') }}", "{{ session('alert_message') }}", "success");
-                                                    </script>
-                                                @endif
                                             </div>
                                         </td>
                                     </tr>

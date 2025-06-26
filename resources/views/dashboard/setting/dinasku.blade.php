@@ -55,11 +55,7 @@
                             <button class="btn btn-primary" type="submit">Simpan Perubahan</button>
                         </div>
                     </form>
-                    @if (session('alert_message'))
-                        <script>
-                            Swal.fire("{{ session('alert_title') }}", "{{ session('alert_message') }}", "success");
-                        </script>
-                    @endif
+              
                 </div>
             </div>
         </div>

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DinasController;
 use App\Http\Controllers\KelasController;
+use App\Http\Controllers\RekapController;
 use App\Http\Controllers\AbsensiController;
 use App\Http\Controllers\HonorerController;
 use App\Http\Controllers\LandingController;
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
     // Dashboard hanya super_admin dan admin
     Route::middleware('role:admin')->group(function () {
         Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+        Route::get('/rekapitulasi', [RekapController::class, 'index'])->name('rekapitulasi');
+        Route::get('/profil', [DashboardController::class, 'profile'])->name('profile');
 
         Route::get('/user', [UserController::class, 'user']);
         Route::post('/users', [UserController::class, 'store'])->name('users.store');
@@ -47,7 +50,7 @@ Route::middleware('auth')->group(function () {
 
         Route::get('/dispensasi', [AbsensiController::class, 'dispensasi'])->name('dispensasi.create');
         Route::post('/admin/dispensasi', [AbsensiController::class, 'store'])->name('admin.dispensasi.store');
-        
+
         Route::get('/dinasku', [DinasController::class, 'index']);
         Route::put('/dinasku/{user}', [DinasController::class, 'update'])->name('dinasku.update');
 
@@ -62,6 +65,7 @@ Route::middleware('auth')->group(function () {
         Route::post('/jadwal/reset/{id}', [JadwalKerjaController::class, 'resetSingle'])->name('jadwal.reset.single');
 
         Route::get('/admin', [UserController::class, 'admin']);
+        Route::post('/ubah-password', [DashboardController::class, 'ubahPassword'])->name('ubah-password');
     });
 
     // Landing hanya honorer

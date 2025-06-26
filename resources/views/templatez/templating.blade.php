@@ -10,7 +10,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Uniba | {{ $headerText }}</title>
+    <title>SIV | {{ $headerText }}</title>
     <meta name="description"
         content="Malin is a modern, responsive bootstrap eCommerce html template for kitchen appliances and furniture stores. Perfect for home decor, interior, and online shopping.">
     <meta name="keywords"
@@ -192,6 +192,7 @@
             padding: 2px 10px;
             border-radius: 14px;
             background: #f0f0f3;
+            color: var(--dominant-font-color);
             box-shadow:
                 4px 4px 10px rgba(0, 0, 0, 0.1),
                 -4px -4px 10px rgba(255, 255, 255, 0.7);
@@ -208,7 +209,7 @@
         <div
             class="loader-img position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center">
             <img src="assetsz/image/index/logo.png" class="width-96 width-xl-120 img-fluid" alt="logo"
-                style="width: 180px;">
+                style="width: 150px;">
         </div>
     </div>
     <!-- Preloader End -->

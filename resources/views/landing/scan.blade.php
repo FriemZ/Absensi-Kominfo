@@ -18,8 +18,14 @@
                 </div>
             @elseif (!$isScanAllowed)
                 <div class="text-center" style="margin-top:90px;">
-                    <img src="{{ asset('assetsz/image/Belum.png') }}" alt="Belum Waktu Absen"
-                        style="max-width:350px; border:2px solid #ebebeb;">
+                    @if ($isSudahAbsenSelesai)
+                        <img src="{{ asset('assetsz/image/sudah.png') }}" alt="Sudah Absen"
+                            style="max-width:350px; border:2px solid #ebebeb;">
+                    @else
+                        <img src="{{ asset('assetsz/image/Belum.png') }}" alt="Belum Waktu Absen"
+                            style="max-width:350px; border:2px solid #ebebeb;">
+                    @endif
+
                     @if ($infoMessage)
                         <p class="mt-3 fw-bold">{{ $infoMessage }}</p>
                     @endif

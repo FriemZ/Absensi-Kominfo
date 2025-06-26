@@ -49,10 +49,4 @@
             </form>
         </div>
     </div>
-
-    @if (session('alert_message'))
-        <script>
-            Swal.fire("{{ session('alert_title') }}", "{{ session('alert_message') }}", "success");
-        </script>
-    @endif
 @endsection

@@ -8,7 +8,7 @@
                     <div class="row ad-flex align-items-center justify-content-between position-relative header-area">
                         <!-- header-logo start -->
                         <div
-                            class="col-12 col-xl-3 header-element header-logo d-flex align-items-center justify-content-between">
+                            class="col-12 col-xl-12 header-element header-logo d-flex align-items-center justify-content-between">
                             <!-- Spacer (Sebagai penyeimbang visual kanan) -->
 
                             <!-- Menu Icon (Kiri) -->
@@ -24,7 +24,7 @@
                             <div class="header-theme-logo mx-auto text-center">
                                 <a href="/home" class="d-inline-block theme-logo">
                                     <img src="assetsz/image/index/logo.png" class="img-fluid logo-raised" alt="logo"
-                                        style="width: 200px;">
+                                        style="width: 110px;">
                                 </a>
                             </div>
 
@@ -41,7 +41,7 @@
                         </div>
                         <!-- header-logo end -->
                         <!-- header-search-contact start -->
-                        <div class="col-xl-9 d-none d-xl-block">
+                        {{-- <div class="col-xl-9 d-none d-xl-block">
                             <div class="ul-mt30 flex-nowrap justify-content-end">
                                 <!-- main-menu start -->
                                 <ul class="menu-ul d-flex flex-wrap">
@@ -112,7 +112,7 @@
 
                                 <!-- main-menu end -->
                             </div>
-                        </div>
+                        </div> --}}
                         <!-- header-search-contact end -->
 
                     </div>

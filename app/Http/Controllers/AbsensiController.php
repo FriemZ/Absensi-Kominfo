@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Absensi;
 use App\Models\Honorer;
 use App\Models\JadwalKerja;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Http;
@@ -52,9 +53,9 @@ class AbsensiController extends Controller
             $absensi = Absensi::where('user_id', $user->id)->whereDate('tanggal', today())->first();
 
             // Cek apakah user sudah absen dan statusnya izin atau sakit
-            if ($absensi && in_array($absensi->status, ['izin', 'sakit'])) {
+            if ($absensi && in_array($absensi->status, ['izin', 'sakit', 'alpha'])) {
                 $isScanAllowed = false;
-                $infoMessage = 'Hari ini kamu sedang ' . $absensi->status . ', tidak perlu absen.';
+                $infoMessage = 'Hari ini kamu sudah tercatat sebagai ' . ucfirst($absensi->status) . ', tidak perlu absen.';
             } else {
                 if (!$absensi && $now->gte($jamMasuk)) {
                     // Belum absen masuk dan sudah waktunya masuk
@@ -78,6 +79,12 @@ class AbsensiController extends Controller
             }
         }
 
+        $isSudahAbsenSelesai = !$isScanAllowed && $infoMessage && Str::contains($infoMessage, [
+            'sudah tercatat',
+            'sudah absen penuh',
+            'tidak perlu absen'
+        ]);
+
         $headerText = 'Scan Absensi';
 
         return view('landing.scan', compact(
@@ -86,7 +93,8 @@ class AbsensiController extends Controller
             'isHoliday',
             'isScanAllowed',
             'absenStatus',
-            'infoMessage'
+            'infoMessage',
+            'isSudahAbsenSelesai'
         ));
     }
 

@@ -3,7 +3,7 @@
     <div class="row">
         <div class="col-12">
             <div class="faq-header text-center">
-                <img src="{{ asset('assets/images/logo/03.png') }}" alt="">
+                <img src="{{ asset('assets/images/logo/logo_awal.png') }}" alt="" style="width: 10%;">
                 <h2>Cari Honorer untuk Dispensasi</h2>
                 <div class="search-div mx-auto" style="max-width: 500px;">
                     <div class="input-group b-r-search">
@@ -12,20 +12,6 @@
                     </div>
                 </div>
             </div>
-            @if (session('alert_message'))
-                <script>
-                    Swal.fire("{{ session('alert_title') }}", "{{ session('alert_message') }}", "success");
-                </script>
-            @endif
-            @if (session('error'))
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops!',
-                        text: "{{ session('error') }}"
-                    });
-                </script>
-            @endif
             <div id="resultList" class="mt-4">
                 @foreach ($honorers as $honorer)
                     <div class="card mt-2 honorer-item" data-name="{{ strtolower($honorer->user->name) }}">

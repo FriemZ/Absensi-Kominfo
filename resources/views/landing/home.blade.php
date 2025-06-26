@@ -5,28 +5,39 @@
             <div class="row row-mtm30">
                 <div class="col-12 col-lg-12 text-center" data-animate="animate__fadeIn">
                     <div class="position-relative peb-19">
-                        <div class="about-feature-counter-info ptb-10 plr-10 extra-bg box-shadow br-hidden">
+                        <div class="about-feature-counter-info ptb-10 plr-10 extra-bg box-shadow br-hidden ">
                             <div
                                 class="d-flex flex-column align-items-center ptb-30 plr-15 plr-sm-30 extra-bg box-shadow border-radius">
                                 <h2 class="dominant-color font-18 text-center" id="realtime-date">Sabtu, 4 Mei 2025</h2>
                                 <h2 class="dominant-color font-32" id="realtime-time">00:00:00</h2>
                                 <div class="secondary-color d-flex align-items-baseline mst-9 mb-4">
+                                    @php
+                                        $sekarang = now();
+                                    @endphp
+
                                     @if (!$absenHariIni)
-                                        {{-- Belum absen hari ini --}}
-                                        Absen Masuk
-                                        @if ($tampilkanTerlambat)
-                                            (<span class="text-danger">-{{ round($menitTerlambat) }}mnt</span>)
+                                        @if ($sekarang->lt($jamMasuk))
+                                            {{-- Belum waktunya absen --}}
+                                            <span class="text-muted">============================</span>
+                                        @else
+                                            {{-- Sudah masuk waktu absen --}}
+                                            Absen Masuk
+                                            @if ($tampilkanTerlambat)
+                                                (<span class="text-danger">-{{ round($menitTerlambat) }}mnt</span>)
+                                            @endif
                                         @endif
-                                    @elseif ($absenHariIni && !$absenHariIni->waktu_pulang)
-                                        {{-- Sudah absen masuk tapi belum pulang --}}
+                                    @elseif(in_array($absenHariIni->status, ['alpha', 'izin', 'sakit']))
+                                        <span class="text-muted">
+                                            ({{ ucfirst($absenHariIni->status) }})</span>
+                                    @elseif (!$absenHariIni->waktu_pulang)
                                         Absen Pulang
                                         @if ($tampilkanTerlambat)
                                             (<span class="text-danger">-{{ round($menitTerlambat) }}mnt</span>)
                                         @endif
                                     @else
-                                        {{-- Sudah absen penuh --}}
-                                        Sudah absen hari ini
+                                        <span class="text-success">Sudah absen hari ini (Lengkap)</span>
                                     @endif
+
                                 </div>
 
                             </div>
@@ -77,7 +88,7 @@
     </section>
 
 
-    <section class="about-feature-counter section-pt" style="margin-bottom: 80px;">
+    {{-- <section class="about-feature-counter section-pt" style="margin-bottom: 80px;">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-md-10 col-lg-8">
@@ -85,14 +96,6 @@
                         <div class="card-body p-0">
                             <div class="app-scroll table-responsive">
                                 <table class="table align-middle mb-0">
-                                    {{-- <thead class="bg-light text-center text-muted">
-                                        <tr>
-                                            <th>Tanggal</th>
-                                            <th>Masuk</th>
-                                            <th>Pulang</th>
-                                            <th>T.Lambat</th>
-                                        </tr>
-                                    </thead> --}}
                                     <tbody>
                                         @forelse ($absensis as $absen)
                                             <tr class="text-center glass-row">
@@ -141,7 +144,42 @@
                         </div>
                     </div>
                 </div>
-            </div> <!-- end row -->
+            </div>
+        </div>
+    </section> --}}
+
+
+    <section class="about-feature-counter section-pt">
+        <div class="container">
+            <div class="row row-mtm30 justify-content-center">
+                <div class="col-lg-8 text-center" data-animate="animate__fadeInUp">
+                    <div class="card shadow-lg bg-light logo-raised">
+                        <div class="card-body p-4">
+                            <h2 class="mb-3 fw-bold dominant-font-color">
+                                📅 {{ $bulanSekarang }}
+                            </h2>
+                            <p class="mb-2 fs-6">
+                                Kamu telah <strong class="text-danger">{{ $totalTerlambat }}</strong> kali
+                                <strong class="text-danger">terlambat</strong>.
+                            </p>
+                            <p class="mb-4 fs-6">
+                                Total keterlambatan:
+                                <strong class="text-danger">{{ $totalMenitTerlambat }} menit</strong>.
+                            </p>
+
+
+                            <div class="progress mb-3" style="height: 10px;">
+                                <div class="progress-bar dominant-bg" role="progressbar"
+                                    style="width: {{ min($totalTerlambat * 5, 100) }}%;"
+                                    aria-valuenow="{{ $totalTerlambat }}" aria-valuemin="0" aria-valuemax="10">
+                                </div>
+                            </div>
+                            <p class="text-muted small">Terus tingkatkan ketepatan waktu ⏱️. Disiplin adalah kunci!</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
+
 @endsection

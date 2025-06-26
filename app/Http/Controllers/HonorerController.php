@@ -47,7 +47,7 @@ class HonorerController extends Controller
             'username' => 'required|string|max:255|unique:users',
             'tanggal_lahir' => 'nullable|date',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'email' => 'required|email|unique:users',
+            'email' => 'nullable|email|unique:users,email',
             'no_hp' => 'required|string',
             'alamat' => 'required|string',
             'dinas_id' => 'nullable|exists:dinas,id',
@@ -149,6 +149,7 @@ class HonorerController extends Controller
             'no_hp' => 'required|string',
             'alamat' => 'required|string',
             'foto_wajah.*' => 'image|mimes:jpeg,jpg,png|max:2048',
+            'new_password' => 'nullable|min:6',
         ]);
 
         // Update data user
@@ -157,6 +158,13 @@ class HonorerController extends Controller
             'username' => $validated['username'],
         ]);
 
+        // Cek dan update password jika diisi
+        if ($request->filled('new_password')) {
+            $user->password = bcrypt($request->new_password);
+        }
+        $user->save();
+
+        
         // Update data honorer
         $honorer->update([
             'jenis_kelamin' => $validated['jenis_kelamin'],

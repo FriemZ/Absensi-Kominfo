@@ -24,7 +24,11 @@ $(document).ready(function () {
     ) {
         const dt = $("#datatable-buttons").DataTable({
             lengthChange: false,
-            buttons: ["excel", "pdf", "colvis"],
+            buttons: [
+                { extend: "excel", footer: true },
+                { extend: "pdf", footer: true },
+                { extend: "colvis", footer: false },
+            ],
             order: [], // ⛔ Nonaktifkan sorting default (agar urutan Senin–Minggu tidak berubah)
         });
 

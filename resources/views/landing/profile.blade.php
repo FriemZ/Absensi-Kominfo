@@ -80,10 +80,11 @@
                                             </div>
 
                                             <div class="col-md-6">
-                                                <label class="form-label">Ganti Password (opsional)</label>
+                                                <label class="form-label">Ganti Password max:6 (opsional)</label>
                                                 <input type="password" name="password" class="form-control shadow-sm"
                                                     placeholder="********">
                                             </div>
+
 
                                         </div>
 

@@ -60,21 +60,37 @@ class LandingController extends Controller
         $menitTerlambat = 0;
         $tampilkanTerlambat = false;
 
-        // Batas akhir keterlambatan sebelum dihitung
-        $batasKeterlambatanMasuk = $jamMasuk->copy()->addMinutes($maksKeterlambatan);
-        $batasKeterlambatanPulang = $jamPulang->copy()->addMinutes($maksKeterlambatan);
+        $statusDikecualikan = ['alpha', 'izin', 'sakit'];
+        if ($absenHariIni && in_array($absenHariIni->status, $statusDikecualikan)) {
+            // Tidak hitung keterlambatan
+        } else {
+            $batasKeterlambatanMasuk = $jamMasuk->copy()->addMinutes($maksKeterlambatan);
+            $batasKeterlambatanPulang = $jamPulang->copy()->addMinutes($maksKeterlambatan);
 
-        if ($modeAbsen === 'masuk') {
-            if ($sekarang->gt($batasKeterlambatanMasuk)) {
+            if ($modeAbsen === 'masuk' && $sekarang->gt($batasKeterlambatanMasuk)) {
                 $menitTerlambat = $sekarang->diffInMinutes($batasKeterlambatanMasuk);
                 $tampilkanTerlambat = true;
-            }
-        } elseif ($modeAbsen === 'pulang') {
-            if ($sekarang->gt($batasKeterlambatanPulang)) {
+            } elseif ($modeAbsen === 'pulang' && $sekarang->gt($batasKeterlambatanPulang)) {
                 $menitTerlambat = $sekarang->diffInMinutes($batasKeterlambatanPulang);
                 $tampilkanTerlambat = true;
             }
         }
+
+        // Rekap keterlambatan bulan ini
+        $bulanIni = Carbon::now()->format('m');
+        $bulanSekarang = Carbon::now()->translatedFormat('F Y');
+        $totalTerlambat = 0;
+        $totalMenitTerlambat = 0;
+
+        foreach (Absensi::where('user_id', $userId)->get() as $absen) {
+            if ($absen->status === 'terlambat' && Carbon::parse($absen->tanggal)->format('m') === $bulanIni) {
+                $totalTerlambat++;
+                $totalMenitTerlambat += $absen->menit_terlambat ?? 0;
+            }
+        }
+
+        $jam = floor($totalMenitTerlambat / 60);
+        $menit = $totalMenitTerlambat % 60;
 
         $headerText = 'Beranda';
 
@@ -85,11 +101,16 @@ class LandingController extends Controller
             'absenHariIni',
             'modeAbsen',
             'menitTerlambat',
-            'tampilkanTerlambat'
+            'tampilkanTerlambat',
+            'jamMasuk',
+            'sekarang',
+            'totalTerlambat',
+            'totalMenitTerlambat',
+            'jam',
+            'menit',
+            'bulanSekarang'
         ));
     }
-
-
 
     public function izin()
     {
@@ -102,6 +123,11 @@ class LandingController extends Controller
     {
         $userId = auth()->id();
 
+        $absensiHariIni = Absensi::where('user_id', auth()->id())
+            ->whereDate('tanggal', now())
+            ->first();
+
+
         $absensis = Absensi::where('user_id', auth()->id())
             ->orderByDesc('tanggal')
             ->get()
@@ -111,7 +137,7 @@ class LandingController extends Controller
                 return $absen;
             });
         $headerText = 'Riwayat';
-        return view('landing.history', compact('headerText', 'absensis'));
+        return view('landing.history', compact('headerText', 'absensis', 'absensiHariIni'));
     }
 
     public function jadwal()
@@ -144,7 +170,7 @@ class LandingController extends Controller
             'no_hp' => 'required|string|max:20',
             'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
             'alamat' => 'required|string',
-            'password' => 'nullable|string|min:6|confirmed',
+            'password' => 'nullable|string|min:6',
         ]);
 
         // Update user table
@@ -223,6 +249,4 @@ class LandingController extends Controller
 
         return redirect('/history')->with('success', 'Absensi izin/sakit berhasil dicatat.');
     }
-
-
 }

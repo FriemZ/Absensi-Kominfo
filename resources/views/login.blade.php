@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login - AdminX</title>
+    <title>Login - SIV</title>
 
     <!-- CSS dan fonts dari folder assets -->
     <link rel="stylesheet" href="{{ asset('assets/vendor/animation/animate.min.css') }}" />
@@ -21,123 +21,10 @@
     <link rel="stylesheet" href="{{ asset('assets/vendor/simplebar/simplebar.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}" />
+    <link rel="stylesheet" href="{{ asset('assetsz/css/new_login.css') }}" />
 </head>
 
 <body>
-    <style>
-        body {
-            overflow: hidden;
-        }
-
-        #splash-screen {
-            position: fixed;
-            inset: 0;
-            background-color: #fff;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-            transition: background-color 1s ease-in-out, opacity 1s ease-in-out;
-        }
-
-        #splash-logo {
-            width: 160px;
-            opacity: 0;
-            transform: scale(1);
-            animation: fadeInZoom 1s forwards ease-in-out;
-            transition: all 1s ease-in-out;
-            position: absolute;
-
-            /* Bikin jadi lingkaran */
-            border-radius: 50%;
-            background-color: #fff;
-
-            /* Tambahan padding jika logomu kecil di dalam */
-            padding: 3px;
-            object-fit: contain;
-
-            /* Efek timbul */
-            box-shadow:
-                0 8px 15px rgba(0, 0, 0, 0.3),
-                0 -4px 6px rgba(255, 255, 255, 0.5);
-            filter: brightness(1.05) contrast(1.05);
-        }
-
-        @keyframes fadeInZoom {
-            to {
-                opacity: 1;
-                transform: scale(1.1);
-            }
-        }
-
-        /* Saat pindah ke pojok */
-        .move-logo {
-            transform: scale(0.4) translate(600px, -300px);
-        }
-
-        /* Setelah splash berakhir, login form muncul */
-        #main-login {
-            height: 100vh;
-            /* isi seluruh tinggi viewport */
-            overflow: hidden;
-            /* tidak izinkan scroll dalam elemen */
-            display: flex;
-            /* opsional: untuk tata letak fleksibel */
-            align-items: center;
-            /* tengah vertikal */
-            justify-content: center;
-            /* tengah horizontal */
-        }
-
-        #main-login.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .otp-input {
-            border: none;
-            border-radius: 12px;
-
-            background: #f0f0f3;
-            /* abu terang */
-            color: #212529;
-
-            /* Efek cekung (inset) */
-            box-shadow:
-                inset 3px 3px 6px rgba(0, 0, 0, 0.1),
-                inset -3px -3px 6px rgba(255, 255, 255, 0.7);
-
-            transition: 0.3s ease;
-        }
-        .name-input {
-            border: none;
-            border-radius: 8px;
-
-            background: #f0f0f3;
-            /* abu terang */
-            color: #212529;
-
-            /* Efek cekung (inset) */
-            box-shadow:
-                inset 3px 3px 6px rgba(0, 0, 0, 0.1),
-                inset -3px -3px 6px rgba(255, 255, 255, 0.7);
-
-            transition: 0.3s ease;
-        }
-        
-
-        .otp-input:focus {
-            outline: none;
-            background: #fefefe;
-            box-shadow:
-                inset 2px 2px 5px rgba(0, 0, 0, 0.1),
-                inset -2px -2px 5px rgba(255, 255, 255, 0.6);
-        }
-    </style>
-
-
-
-
     <div id="splash-screen">
         <img id="splash-logo" src="{{ asset('assets/images/logo/logo_awal.png') }}" alt="Logo Awal">
     </div>
@@ -157,8 +44,10 @@
                                 @csrf
                                 <div class="row">
                                     <div class="col-12">
+                                        <img src="assetsz/image/index/logo.png" class="img-fluid logo-raised"
+                                            alt="logo" style="width: 110px; display: flex; justify-content: center; align-items: center; margin: 0 auto;">
                                         <div class="mb-5 text-center text-lg-start">
-                                            <h2 class="text-primary f-w-600">Welcome To AdminX!</h2>
+                                            <h2 class="text-primary f-w-600">Welcome To SIV!</h2>
                                             <p>Sign in with your username or name and password</p>
                                         </div>
                                     </div>
@@ -228,55 +117,7 @@
     </div>
 
 
-    <script>
-        window.addEventListener('load', () => {
-            const splash = document.getElementById('splash-screen');
-            const logo = document.getElementById('splash-logo');
-            const main = document.getElementById('main-login');
-
-            // Jalankan animasi perpindahan logo
-            setTimeout(() => {
-                logo.classList.add('move-logo');
-            }, 1200);
-
-            // Sembunyikan splash screen dan munculkan login
-            setTimeout(() => {
-                splash.style.opacity = '0';
-                splash.style.pointerEvents = 'none';
-                main.classList.add('show');
-                document.body.style.overflow = 'auto';
-            }, 2200);
-        });
-
-        document.addEventListener("DOMContentLoaded", () => {
-            const inputs = document.querySelectorAll('.otp-input');
-            const hiddenPassword = document.getElementById('password');
-
-            inputs.forEach((input, index) => {
-                input.addEventListener('input', () => {
-                    // Hanya angka, pindah otomatis
-                    if (input.value.length === 1 && index < inputs.length - 1) {
-                        inputs[index + 1].focus();
-                    }
-                    updatePassword();
-                });
-
-                input.addEventListener('keydown', (e) => {
-                    if (e.key === "Backspace" && input.value === "" && index > 0) {
-                        inputs[index - 1].focus();
-                    }
-                });
-            });
-
-            function updatePassword() {
-                const password = Array.from(inputs).map(i => i.value).join('');
-                hiddenPassword.value = password;
-            }
-        });
-    </script>
-
-
-
+    <script src="{{ asset('assetsz/js/new_login.js') }}"></script>
     <!-- Scripts -->
     <script src="{{ asset('assets/js/jquery-3.6.3.min.js') }}"></script>
     <script src="{{ asset('assets/vendor/bootstrap/bootstrap.bundle.min.js') }}"></script>

@@ -1,2 +1,14 @@
 composer require guzzlehttp/guzzle
 php artisan schedule:run
+php artisan absensi:alpha-harian
+
+
+pip install face_recognition
+pip install numpy
+pip install opencv-python
+
+jika windows:
+pip install cmake
+
+
+000000

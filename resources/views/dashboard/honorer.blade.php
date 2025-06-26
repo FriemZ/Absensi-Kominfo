@@ -98,7 +98,7 @@
                                                         <label>Upload Foto Wajah (minimal 3 jika ingin mengganti):</label>
                                                         <input type="file" name="foto_wajah[]" multiple
                                                             accept="image/jpeg,image/jpg,image/png">
-                                                       <br> <small class="text-muted">Kosongkan jika tidak ingin
+                                                        <br> <small class="text-muted">Kosongkan jika tidak ingin
                                                             mengganti.</small>
                                                     </div>
                                                     <div class="mb-3">
@@ -153,6 +153,13 @@
                                                             class="form-label">Alamat</label>
                                                         <textarea class="form-control" id="alamat{{ $honorer->id }}" name="alamat" rows="3" required>{{ $honorer->alamat }}</textarea>
                                                     </div>
+                                                    <div class="mb-3">
+                                                        <label for="new_password{{ $honorer->id }}"
+                                                            class="form-label">Password Baru (Opsional)</label>
+                                                        <input type="password" class="form-control"
+                                                            id="new_password{{ $honorer->id }}" name="new_password"
+                                                            placeholder="Kosongkan jika tidak ingin mengubah (max:6) ">
+                                                    </div>
 
                                                     <!-- Kalau mau update face_encoding, bisa tambah input hidden atau khusus -->
                                                 </div>
@@ -179,11 +186,7 @@
         </div>
     </div>
 
-    @if (session('alert_message'))
-        <script>
-            Swal.fire("{{ session('alert_title') }}", "{{ session('alert_message') }}", "success");
-        </script>
-    @endif
+
 
     <!-- Offcanvas Add User -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasRight" aria-labelledby="offcanvasRightLabel3">
@@ -226,13 +229,17 @@
                 </div>
                 <div class="mb-3">
                     <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" required
-                        placeholder="Masukkan @Email.....">
+                    <input type="email" class="form-control @error('email') is-invalid @enderror" name="email"
+                        value="{{ old('email') }}" placeholder="Masukkan Email.....(Optional)">
+                    @error('email')
+                        <div class="invalid-feedback">
+                            {{ $message }} {{-- Contoh: "The email has already been taken." --}}
+                        </div>
+                    @enderror
                 </div>
                 <div class="mb-3">
                     <label class="form-label">Nomor HP</label>
                     <div class="input-group" id="content">
-                        <span class="input-group-text">+62</span>
                         <input type="text" class="form-control" name="no_hp" placeholder="xxx-xxxxx-xxx" required>
                     </div>
                 </div>
